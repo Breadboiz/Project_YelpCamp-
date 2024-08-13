@@ -34,4 +34,4 @@ module.exports.userSchema = Joi.object({
         password: Joi.string().required()
     }).required()
 })
-//encounter conflict 
+
