@@ -10,10 +10,6 @@ const UserSchema = new Schema({
         unique: [true, 'That email address has already been used']
     }
 })
-UserSchema.plugin(passportLocalMongoose,{
-    
-     //   selectFields : 'email username password' //Space seperate the required fields
-     
-});
+
 module.exports = mongoose.model('User', UserSchema)
 
