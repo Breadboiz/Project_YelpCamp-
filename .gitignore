@@ -1,0 +1,4 @@
+/seeds
+.env
+/node_modules
+testAPI.http

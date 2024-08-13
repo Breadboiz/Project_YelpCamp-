@@ -1,0 +1,117 @@
+<% layout('/layouts/boilerplate') %>
+<div class="row">
+    <div class="col-6 mb-4">
+        <div class="card">
+          <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <% campground.image.forEach((img, i) => { %>
+                <div class="carousel-item <%= i === 0 ? 'active' : '' %> ">
+                  <img src="<%= getResizedImage(img.filename,540,360) %>" class="d-block w-100" alt="..." />
+                </div>
+              <% }) %>
+            </div>
+           <% if(campground.image.length > 1){ %>
+           <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+           <% } %>
+          </div>
+          
+            <div class="card-body">
+              <h5 class="card-title"><%= campground.title %></h5>
+              <p class="card-text"><%= campground.description %></p>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item text-muted"><%= campground.location %></li>
+              <li class="list-group-item">$ <%= campground.price %></li>
+              <li class="list-group-item">Submited by:  <%= campground.author.username %></li>
+            </ul>
+            <% if(currentUser && currentUser.equals(campground.author._id)) {%>
+            <div class="card-body">
+                <a href="/campground/<%= campground._id %>/edit" class="card-link btn btn-info">Edit</a>
+              <form action="/campground/<%= campground._id %>?_method=DELETE" method="POST" class="d-inline ">
+                <button class="btn btn-danger">Delete</button>
+            </form>
+            </div>
+            <% } %>
+          </div>
+          <div class="card-footer text-muted">
+            <a href="/campground" class="card-link">All campground</a>
+          </div>
+    </div>
+  <div class="col-6 ">
+    <div class="">
+      <h2>Leave a review</h2>
+      <form action="/campground/<%= campground._id %>/Review" method="post" novalidate class="validated-form">
+        <div class="mb-1">
+          <!-- <label for="rating" class="form-label">Rating</label> -->
+          <!-- <input type="range" class="form-range" id="rating" name="Review[rating]" min="1" max="5"> -->
+          <fieldset class="starability-grow">
+            <legend>Rating:</legend>
+            <input type="radio" id="no-rate" class="input-no-rate" name="Review[rating]" value="1" checked aria-label="No rating." />
+            <input type="radio" id="second-rate1" name="Review[rating]" value="1" />
+            <label for="second-rate1" title="Terrible">1 star</label>
+            <input type="radio" id="second-rate2" name="Review[rating]" value="2" />
+            <label for="second-rate2" title="Not good">2 stars</label>
+            <input type="radio" id="second-rate3" name="Review[rating]" value="3" />
+            <label for="second-rate3" title="Average">3 stars</label>
+            <input type="radio" id="second-rate4" name="Review[rating]" value="4" />
+            <label for="second-rate4" title="Very good">4 stars</label>
+            <input type="radio" id="second-rate5" name="Review[rating]" value="5" />
+            <label for="second-rate5" title="Amazing">5 stars</label>
+          </fieldset>
+        </div>
+        <div class="mb-3">
+          <Label for="review"></Label>
+          <textarea class="form-control" id="review" rows="3" name="Review[body]" required ></textarea>
+          <span class="invalid-feedback">Dont leave that blank!</span>
+          <span class="valid-feedback">Looks good</span>
+        </div>
+        <% if(currentUser){ %>
+          <button class="btn btn-success">Submit</button>
+        <% } %>
+       </form>
+     </div>
+     <div class="">
+      <% for(let review of campground.Review){ %>
+        <div class="card" style="border-top: none; border-left: none;border-right: none;">
+          <div class="card-body" >
+            <div class="card-title ">
+              <h5 class="d-inline">Rating: <%= review.rating %>&#9733</h5>
+              <p class="starability-result" data-rating="<%= review.rating %>">
+                Rated: <%= review.rating %> stars
+              </p>
+              <div class="dropdown d-inline float-end">
+                <button type="button" data-bs-toggle="dropdown" style="border: none; background-color: transparent ;"  aria-expanded="false">
+                  &#x22EE;
+                </button>
+                      <% if(currentUser && review.author.equals(currentUser)){ %>
+                        <ul class="dropdown-menu" >
+                          <li class="dropdown-item">
+                            <form action="/campground/<%= campground._id %>/Review/<%= review._id %>?_method=DELETE" method="post">
+                        <button style="border: none; background-color: transparent ;">Delete</button></li>
+                      </ul>
+                      <% } %>
+              </div>
+            </div>
+            <figure >
+              <blockquote class="blockquote">
+                <p class="col-6"><%= review.body %></p>
+              </blockquote>
+              <figcaption class="blockquote-footer text-end">
+                  <cite title="Source Title"><%= review.author.username %></cite>
+              </figcaption>
+            </figure>
+           
+          </div>         
+        </div>
+        <% } %>
+     </div>
+  </div>
+</div>    
+
