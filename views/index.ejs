@@ -11,18 +11,28 @@
     <h1 class="mb-5">All Camgrounds</h1>
     <!-- <button><a href='/campground/new'>Add campground</a></button>  -->
     
+      <div id="content" class="mb-5">
         <% for(campground of allCampgrounds){%>
           <div class="card mb-3">
             <div class="row">
               <div class="col-md-4">
+                <% if(campground.image.length){ %>
                 <img class="img-thumbnail" src="<%= campground.image[0].url %>" alt="">
+                <% } else{ %>
+                  <img class="img-thumbnail" src="image/Empty.png" alt="">
+                <% } %>
+                
               </div>
               <div class="col-md-8">
                 <div class="card-body">
                   <h5 class="card-title">
                     <%= campground.title %>
                   </h5>
-                  <p class="card-text">
+                  <p class="card-text" style="display: -webkit-box;
+                                              -webkit-line-clamp: 3;
+                                              -webkit-box-orient: vertical;
+                                              overflow: hidden;
+                                              text-overflow: ellipsis;">
                     <%= campground.description %>
                   </p>
                   <p class="text-muted">
@@ -34,5 +44,6 @@
             </div>
           </div>
       <%  } %>
+      </div>
 <!-- </body>
 </html> -->

@@ -1,5 +1,4 @@
 const User = require('../models/user.js')
-
 module.exports.renderRegisterForm = (req,res)=>{
     res.render('register.ejs',{title: "Register"})
 }
@@ -32,7 +31,7 @@ module.exports.renderLoginForm =  (req,res)=>{
     res.render('login.ejs',{title:"Login"})
 }
 
-module.exports.Login = (req,res)=>{
+module.exports.Login = async (req,res)=>{
     const redirectUrl = res.locals.returnTo || '/campground'
     req.flash('success', "Welcome to Yelpcamp")
     res.redirect(redirectUrl);

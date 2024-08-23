@@ -4,13 +4,15 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "node --watch app.js"
+    "server": "nodemon app.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@maptiler/client": "^1.8.1",
+    "@maptiler/sdk": "^2.2.2",
     "axios": "^1.7.2",
     "cloudinary": "^1.41.3",
     "connect-flash": "^0.1.1",

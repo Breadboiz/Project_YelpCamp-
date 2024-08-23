@@ -1,3 +1,4 @@
+const { coordinates } = require('@maptiler/client')
 const Joi = require('joi')
 
 module.exports.campgroundSchema = Joi.object({
@@ -9,7 +10,6 @@ module.exports.campgroundSchema = Joi.object({
             {
                 url: Joi.string().required(),
                 filename: Joi.string().required()
-
             }
         ],
         location: Joi.string().required(),

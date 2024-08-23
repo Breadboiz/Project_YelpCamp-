@@ -1,6 +1,6 @@
 <% layout('/layouts/boilerplate') %>
 <div class="row">
-    <div class="col-6 mb-4">
+    <div class="col-7 mb-4">
         <div class="card">
           <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
@@ -44,13 +44,13 @@
             <a href="/campground" class="card-link">All campground</a>
           </div>
     </div>
-  <div class="col-6 ">
+  <div class="col-5 ">
+    <div id="map">
+    </div>
     <div class="">
       <h2>Leave a review</h2>
       <form action="/campground/<%= campground._id %>/Review" method="post" novalidate class="validated-form">
         <div class="mb-1">
-          <!-- <label for="rating" class="form-label">Rating</label> -->
-          <!-- <input type="range" class="form-range" id="rating" name="Review[rating]" min="1" max="5"> -->
           <fieldset class="starability-grow">
             <legend>Rating:</legend>
             <input type="radio" id="no-rate" class="input-no-rate" name="Review[rating]" value="1" checked aria-label="No rating." />
@@ -113,5 +113,9 @@
         <% } %>
      </div>
   </div>
-</div>    
-
+</div>  
+<script>
+  const apiKey = '<%- process.env.MAPTILER_API_KEY %>';
+  const campground = <%- JSON.stringify(campground) %> //some error hightlight may appears, its just VScode autofotmat bugs, just ignore it 
+</script>  
+<script src="/javascripts/displayMap.js"></script>

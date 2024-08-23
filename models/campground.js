@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
-const Review = require('./review')
+const Review = require('./review');
+const { required } = require('joi');
 const Schema = mongoose.Schema;
 
 const campgroundSchema = new Schema({
@@ -13,6 +14,17 @@ const campgroundSchema = new Schema({
     price: Number,
     description: String,
     location: String,
+    geometry: {
+        type: {
+            type: String,
+            enum: ['Point'],
+            require: true
+        },
+        coordinates:{
+            type: [Number],
+            require: true
+        }
+    },
     author:{
          type: Schema.Types.ObjectId,
         ref: 'User'

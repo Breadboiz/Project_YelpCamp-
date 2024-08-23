@@ -8,8 +8,8 @@ const multer = require('multer')
 const {storage} = require('../cloudinary/index.js')
 const upload = multer({storage:storage})
 
-Router.get('/new',isLoggedIn, Campgrounds.renderNewForm)
-Router.get('/:id/edit', isLoggedIn,catchAsync(Campgrounds.renderEditForm))
+
+Router.route('/new').get(isLoggedIn, Campgrounds.renderNewForm)
 
 Router.route('/')
 .get(catchAsync(Campgrounds.index))
@@ -20,5 +20,7 @@ Router.route('/:id')
 .get( catchAsync(Campgrounds.renderDetailsPage))
 .put(isLoggedIn,isAuthor,upload.array('campground[image]'),validateCampground,catchAsync(Campgrounds.editCampground))
 .delete(isLoggedIn,isAuthor,catchAsync(Campgrounds.deleteCampground))
+
+Router.route('/:id/edit').get(isLoggedIn,catchAsync(Campgrounds.renderEditForm))
 
 module.exports = Router
