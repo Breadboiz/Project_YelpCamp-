@@ -5,8 +5,19 @@ const maptilerClient = require("@maptiler/client");
 maptilerClient.config.apiKey = process.env.MAPTILER_API_KEY;
 
 module.exports.index = async (req, res) => {
-    const allCampgrounds = await Campground.find({})
-    res.render('index.ejs', { allCampgrounds, title: 'All Campgrounds' })
+    const myURL = new URL(req.url, `http://${req.headers.host}`);
+    const searchResult = Object.fromEntries(myURL.searchParams).query || ''; 
+   // console.log( myURL.searchParams);
+    if(!searchResult){
+        const allCampgrounds = await Campground.find({})
+        res.render('index.ejs', { allCampgrounds, title: 'All Campgrounds' })
+    }
+    else{
+        const allCampgrounds = await Campground.find( { 'title' : { '$regex' : searchResult } } )
+        // console.log(allCampgrounds)
+        res.render('index.ejs', { allCampgrounds, title: 'All Campgrounds' })
+    }
+
 }
 module.exports.renderNewForm = (req, res) => {
     res.render('create.ejs', { title: 'Create' });
